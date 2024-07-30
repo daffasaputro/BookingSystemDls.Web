@@ -1,0 +1,89 @@
+﻿@using BookingSystemDls.DataModel.Resource
+@model ResourceUpsertDataModel
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Add New Resource" : "Update " + Model.Name;
+}
+
+<div class="resource-upsert-form">
+    <form class="regular-form" method="post" enctype="multipart/form-data" asp-controller="Resource" asp-action="Upsert">
+        <input class="resource-id" type="hidden" asp-for="Id" />
+        <div class="regular-input">
+            <p>Resource Name</p>
+            <input class="text" type="text" asp-for="Name" />
+        </div>
+        @if (Model.Id != 0)
+        {
+            <div class="regular-input">
+                <p>Resource Code</p>
+                <div class="resource-code-list">
+                    <a class="regular-button add-new-button">Add New</a>
+                    <table class="regular-table">
+                        <thead>
+                            <tr>
+                                <th>Is Active</th>
+                                <th>Resource Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.ResourceCodes.Count; i++)
+                            {
+                                <tr>
+                                    <input type="hidden" name="ResourceCodes[@i].Code" asp-for="@Model.ResourceCodes[i].Code" />
+                                    <input type="hidden" name="ResourceCodes[@i].ResourceId" asp-for="@Model.ResourceCodes[i].ResourceId" />
+                                    <td>
+                                        <input type="checkbox" name="ResourceCodes[@i].Status" asp-for="@Model.ResourceCodes[i].Status" />
+                                    </td>
+                                    <td>@Model.ResourceCodes[i].Code</td>
+                                </tr>
+                            }
+                    </table>
+                </div>
+            </div>
+        }
+        <div class="regular-input">
+            <p>Status</p>
+            <input type="checkbox" asp-for="Status" />
+        </div>
+        <div class="regular-input">
+            <p>Resource Icon</p>
+            <div class="file-group">
+                @if (Model.Id != 0)
+                {
+                    <img src="~/upload/@Model.Icon" />
+                }
+                <div>
+                    <label class="regular-button" for="file">Browse</label>
+                    <p class="file-path">@Model.Icon</p>
+                </div>
+                <input id="file" type="file" asp-for="IconFile" />
+            </div>
+        </div>
+        <div class="regular-input">
+            <p></p>
+            <div class="button-group">
+                <button class="regular-button" type="submit">Submit</button>
+                <a class="regular-button" asp-controller="Resource" asp-action="Index">Back</a>
+            </div>
+        </div>
+    </form>
+    <div class="popup-container">
+        <div class="form-popup resource-code-upsert-form-popup">
+            <div class="regular-input">
+                <p>Resource Code</p>
+                <input id="code" class="text" type="text" />
+            </div>
+            <div class="regular-input">
+                <p>Status</p>
+                <input id="status" type="checkbox" />
+            </div>
+            <div class="regular-input">
+                <p></p>
+                <div class="button-group">
+                    <button class="regular-button submit-button" type="submit">Submit</button>
+                    <button class="regular-button close-popup-button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+﻿@using BookingSystemDls.DataModel.Room
+@model RoomUpsertDataModel
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Add New Room" : "Update " + Model.Name;
+}
+
+<div class="booking-code-upsert-form">
+    <form class="regular-form" method="post" asp-controller="Room" asp-action="Upsert">
+        <input class="hidden" type="text" asp-for="Id" />
+        <div class="regular-input">
+            <p>Room Name</p>
+            <input class="text" type="text" asp-for="Name" />
+        </div>
+        <div class="regular-input">
+            <p>Floor</p>
+            <input class="text" type="number" asp-for="Floor" />
+        </div>
+        <div class="regular-input">
+            <p>Description</p>
+            <input class="text" type="text" asp-for="Description" />
+        </div>
+        <div class="regular-input">
+            <p>Location</p>
+            <select class="text" asp-for="LocationId">
+                <option value="null">Location</option>
+                @foreach (var row in ViewBag.LocationDropdown)
+                {
+                    <option value="@row.Value">@row.Label</option>
+                }
+            </select>
+        </div>
+        <div class="regular-input">
+            <p>Capacity</p>
+            <input class="text" type="number" asp-for="Capacity" />
+        </div>
+        @if (Model.Id != 0)
+        {
+            <div class="regular-input">
+                <p>Resource</p>
+                <div class="resource-code-list">
+                    <table class="regular-table">
+                        <thead>
+                            <tr>
+                                <th>Is Active</th>
+                                <th>Resource Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.RoomResources.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="RoomResources[@i].IsChecked" asp-for="@Model.RoomResources[i].IsChecked" />
+                                    </td>
+                                    <td>@Model.RoomResources[i].ResourceName</td>
+                                </tr>
+                            }
+                    </table>
+                </div>
+            </div>
+        }
+        <div class="regular-input">
+            <p></p>
+            <div class="button-group">
+                <button class="regular-button" type="submit">Submit</button>
+                <a class="regular-button" asp-controller="Room" asp-action="Index">Back</a>
+            </div>
+        </div>
+    </form>
+</div>

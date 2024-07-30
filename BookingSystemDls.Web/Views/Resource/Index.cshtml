@@ -1,0 +1,97 @@
+﻿@using BookingSystemDls.DataModel.Resource
+@model ResourceDataModel
+
+@{
+    ViewData["Title"] = "Resource";
+}
+
+<div class="table-index">
+    <a class="regular-button" asp-controller="Resource" asp-action="UpsertForm">Add New</a>
+    <table class="regular-table">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Resource Name</th>
+                <th>Status</th>
+                <th>Icon</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Model.IndexDataModels)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Resource" asp-action="UpsertForm" asp-route-id="@row.Id">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                        <a asp-controller="Resource" asp-action="Delete" asp-route-id="@row.Id">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                    <td>@row.Name</td>
+                    <td><input type="checkbox" disabled asp-for=@row.Status /></td>
+                    <td>
+                        <img src="~/upload/@row.Icon" />
+                    </td>
+                </tr>
+            }
+    </table>
+    <div class="regular-pagination">
+        <div class="navigation">
+            <div class="page">
+                @if (ViewBag.Page > 1)
+                {
+                    <a asp-controller="Resource" asp-action="Index" asp-route-page="1" asp-route-displaData="@ViewBag.DisplayData">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </a>
+                    <a asp-controller="Resource" asp-action="Index" asp-route-page="@((int)ViewBag.Page - 1)" asp-route-displayData="@ViewBag.DisplayData">
+                        <i class="fa-solid fa-caret-left"></i>
+                    </a>
+                }
+                else
+                {
+                    <a>
+                        <i class="fa-solid fa-backward-step"></i>
+                    </a>
+                    <a>
+                        <i class="fa-solid fa-caret-left"></i>
+                    </a>
+                }
+                <p>@ViewBag.Page</p>
+                @if (ViewBag.Page < ViewBag.TotalPage)
+                {
+                    <a asp-controller="Resource" asp-action="Index" asp-route-page="@((int)ViewBag.Page + 1)" asp-route-displayData="@ViewBag.DisplayData">
+                        <i class="fa-solid fa-caret-right"></i>
+                    </a>
+                    <a asp-controller="Resource" asp-action="Index" asp-route-page="@ViewBag.TotalPage" asp-route-displayData="@ViewBag.DisplayData">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </a>
+                }
+                else
+                {
+                    <a>
+                        <i class="fa-solid fa-caret-right"></i>
+                    </a>
+                    <a>
+                        <i class="fa-solid fa-forward-step"></i>
+                    </a>
+                }
+            </div>
+            <div class="regular-dropdown">
+                <div class="select">
+                    <p>@ViewBag.DisplayData</p>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="option">
+                    <a asp-controller="Resource" asp-action="Index" asp-route-displayData="5">5</a>
+                    <a asp-controller="Resource" asp-action="Index" asp-route-displayData="10">10</a>
+                    <a asp-controller="Resource" asp-action="Index" asp-route-displayData="15">15</a>
+                    <a asp-controller="Resource" asp-action="Index" asp-route-displayData="20">20</a>
+                </div>
+            </div>
+        </div>
+        <div class="info">
+            <p>@ViewBag.DataFrom - @ViewBag.DataTo of @ViewBag.TotalData item</p>
+        </div>
+    </div>
+</div>

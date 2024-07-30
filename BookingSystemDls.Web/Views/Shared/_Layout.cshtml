@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking System DLS</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="main-header">
+                <h1>SPECTRUM</h1>
+                <div class="profile">
+                    <p>Welcome,</p>
+                    <p>Guest as guest</p>
+                </div>
+                <div class="date">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <p>Senin, 17 Maret 2020</p>
+                </div>
+                <a class="logout" href="#">
+                    <i class="fa-solid fa-power-off"></i>
+                    <p>Logout</p>
+                </a>
+            </div>
+            <div class="sub-header">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+        </div>
+        <div class="aside">
+            <h1>Kino</h1>
+            <div class="navbar">
+                <p class="header">Master Data</p>
+                <a class="body" asp-controller="BookingCode" asp-action="Index">Master Booking Code</a>
+                <a class="body" asp-controller="Resource" asp-action="Index">Master Resource</a>
+                <a class="body" asp-controller="Room" asp-action="Index">Master Room</a>
+                <p class="header">Transaction</p>
+                <a class="body">History</a>
+                <a class="body">Report</a>
+            </div>
+        </div>
+        <div class="main">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+<script src="~/js/site.js"></script>
+</html>

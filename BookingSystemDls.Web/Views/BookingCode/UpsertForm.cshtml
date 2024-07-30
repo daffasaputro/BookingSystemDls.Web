@@ -1,0 +1,35 @@
+﻿@using BookingSystemDls.DataModel.BookingCode
+@model BookingCodeUpsertDataModel
+
+@{
+    ViewData["Title"] = Model.Code == null ? "Add New Booking Code" : "Update " + Model.Code;
+    string action = Model.Code == null ? "Insert" : "Update";
+}
+
+<div class="booking-code-upsert-form">
+    <form class="regular-form" method="post" asp-controller="BookingCode" asp-action=@action>
+        <div class="regular-input">
+            <p>Booking Code</p>
+            @if (Model.Code == null)
+            {
+                <input class="text" type="text" asp-for="Code" />
+            }
+            else
+            {
+                <input class="text" type="text" placeholder=@Model.Code disabled />
+                <input type="hidden" asp-for="Code" />
+            }
+        </div>
+        <div class="regular-input">
+            <p>Status</p>
+            <input type="checkbox" asp-for="Status" />
+        </div>
+        <div class="regular-input">
+            <p></p>
+            <div class="button-group">
+                <button class="regular-button" type="submit">Submit</button>
+                <a class="regular-button" asp-controller="BookingCode" asp-action="Index">Back</a>
+            </div>
+        </div>
+    </form>
+</div>
